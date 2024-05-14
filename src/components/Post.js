@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { List, Skeleton, Avatar } from 'antd';
+import { List, Skeleton, Avatar} from 'antd';
 import EliminaPost from './EliminaPost';
+import ModificaPost from './ModificaPost'; 
 
-const Post = ({ item, elimina }) => {
+const Post = ({ item, elimina, modifica }) => {
     const [eliminaModalVisible, setEliminaModalVisible] = useState(false);
+    const [editModalVisible, setEditModalVisible] = useState(false);
 
     const confermaEliminazione = () => {
         elimina(item.id);
-        setEliminaModalVisible(false); // Chiudi il modal dopo aver confermato l'eliminazione
+        setEliminaModalVisible(false); 
     };
 
     return (
         <List.Item
             actions={[
-                <a key="list-loadmore-edit">edit</a>,
+                <a key="list-loadmore-edit" onClick={() => setEditModalVisible(true)}>edit</a>,
                 <a key="list-loadmore-more" onClick={() => setEliminaModalVisible(true)}>delete</a>
             ]}
         >
@@ -23,19 +25,23 @@ const Post = ({ item, elimina }) => {
                     title={<a href="#">[{item.id}][{item.title}]</a>}
                     description={item.body}
                 />
-                <div>content</div>
+                <div></div>
             </Skeleton>
             {eliminaModalVisible && (
                 <EliminaPost
-                    elimina={confermaEliminazione} // Passa la funzione corretta
-                    onCancel={() => setEliminaModalVisible(false)} // Gestisci la chiusura del modal
+                    elimina={confermaEliminazione} 
+                    onCancel={() => setEliminaModalVisible(false)} 
                 />
             )}
 
+            <ModificaPost
+                visible={editModalVisible}
+                onCancel={() => setEditModalVisible(false)}
+                item={item}
+                modifica={modifica}
+            />
         </List.Item>
-
     );
 };
-
 
 export default Post;

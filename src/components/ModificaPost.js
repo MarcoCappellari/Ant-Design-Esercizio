@@ -1,40 +1,52 @@
-import { Form, Input, Button } from 'antd';
+import React from 'react';
+import { Modal, Form, Input, Button } from 'antd';
 
+const EditPostModal = ({ visible, onCancel, item, modifica }) => {
+    const [form] = Form.useForm();
 
-function FormModifica({ editingPost, ModificaPost }) {
-    const [form] = Form.useForm(); // Otteniamo l'istanza del form
-
-    const handleSubmit = (values) => {
-
-        //const { title, body } = values; // Estrai title e body da values
-       // ModificaPost(editingPost.id, title, body); // Passa i parametri separati a ModificaPost
-        console.log(values)
+    const onFinish = (values) => {
+        modifica(item.id, values.title, values.body, item.userId);
+        onCancel(); 
     };
 
     return (
-        <>
+        <Modal
+            title="Edit Post"
+            open={visible}
+            onCancel={onCancel}
+            footer={null} 
+        >
             <Form
-                layout="inline"
-                form={form} // Passiamo l'istanza del form come proprietà
-                onFinish={handleSubmit}
-                style={{
-                    maxWidth: 'none',
+                form={form}
+                name="edit_post_form"
+                onFinish={onFinish}
+                initialValues={{
+                    title: item.title, 
+                    body: item.body,
                 }}
             >
-                <Form.Item label="Titolo post" name="title" initialValue={editingPost.title}>
-                    <Input placeholder="Inserisci il titolo del post" />
+                <Form.Item
+                    name="title"
+                    label="title"
+                    rules={[{ required: true, message: 'Please input the title!' }]}
+                >
+                    <Input />
                 </Form.Item>
-                <Form.Item label="Body" name="body" initialValue={editingPost.body}>
-                    <Input.TextArea placeholder="Inserisci il messaggio" />
+                <Form.Item
+                    name="body"
+                    label="body"
+                    rules={[{ required: true, message: 'Please input the body!' }]}
+                >
+                    <Input.TextArea />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType='submit'>
-                        Salva modifiche
+                    <Button type="primary" htmlType="submit">
+                        Update
                     </Button>
                 </Form.Item>
             </Form>
-        </>
+        </Modal>
     );
-}
+};
 
-export default FormModifica;
+export default EditPostModal;
