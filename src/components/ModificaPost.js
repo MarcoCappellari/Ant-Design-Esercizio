@@ -6,7 +6,7 @@ const EditPostModal = ({ visible, onCancel, item, modifica }) => {
 
     const onFinish = (values) => {
         modifica(item.id, values.title, values.body, item.userId);
-        onCancel(); 
+        onCancel();
     };
 
     return (
@@ -14,14 +14,14 @@ const EditPostModal = ({ visible, onCancel, item, modifica }) => {
             title="Edit Post"
             open={visible}
             onCancel={onCancel}
-            footer={null} 
+            footer={"Il post non potrà più essere recuperato"}
         >
             <Form
                 form={form}
                 name="edit_post_form"
                 onFinish={onFinish}
                 initialValues={{
-                    title: item.title, 
+                    title: item.title,
                     body: item.body,
                 }}
             >

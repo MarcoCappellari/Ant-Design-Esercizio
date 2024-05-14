@@ -6,7 +6,7 @@ const EliminaPost = ({ elimina, onCancel }) => {
     return (
       <Modal
         title="Elimina Post"
-        open={true} // Utilizza uno stato locale per gestire la visibilità
+        open={true} 
         onOk={elimina}
         onCancel={onCancel} // Chiudi il modal senza eliminare il post
         okText="Elimina"

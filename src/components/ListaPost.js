@@ -57,7 +57,7 @@ const ListaPost = () => {
                 console.error('Errore:', error);
             });
     };
-    
+
     //Metodo modifica POST
     const ModificaPost = (postId, title, body, userId) => {
         fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
@@ -95,14 +95,14 @@ const ListaPost = () => {
 
     return (
         <>
+            {/*Form per inserimento di un nuovo POST*/}
             <CreazionePost aggiungiPost={aggiungiPost}></CreazionePost>
+            {/*Form per inserimento di un nuovo POST*/}
+            <h2>Post:</h2>
             <List
-                className="demo-loadmore-list"
-
                 itemLayout="horizontal"
-
                 dataSource={list}
-                renderItem={(item) => <Post item={item} elimina={() => (eliminaPost(item.id))} modifica={ModificaPost} />}
+                renderItem={(item, index) => <Post item={item} elimina={() => (eliminaPost(item.id))} modifica={ModificaPost} index={index}/>}
             />
         </>
     );
