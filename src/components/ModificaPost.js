@@ -18,7 +18,7 @@ const EditPostModal = ({ visible, onCancel, item, modifica }) => {
         >
             <Form
                 form={form}
-                name="edit_post_form"
+                //name="edit_post_form"
                 onFinish={onFinish}
                 initialValues={{
                     title: item.title,

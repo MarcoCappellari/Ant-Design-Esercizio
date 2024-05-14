@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { List, Skeleton, Avatar} from 'antd';
+import { List,  Avatar} from 'antd';
 import EliminaPost from './EliminaPost';
-import ModificaPost from './ModificaPost'; 
+import PulsanteModificaPost from './PulsanteModificaPost';
 
 const Post = ({ item, elimina, modifica , index}) => {
     const [eliminaModalVisible, setEliminaModalVisible] = useState(false);
-    const [editModalVisible, setEditModalVisible] = useState(false);
 
     const confermaEliminazione = () => {
         elimina(item.id);
@@ -16,31 +15,25 @@ const Post = ({ item, elimina, modifica , index}) => {
         <List.Item
             actions={[ 
                 //sono le ACTION, non sono pulsanti
-                <a key="list-loadmore-edit" onClick={() => setEditModalVisible(true)}>edit</a>,
-                <a key="list-loadmore-more" onClick={() => setEliminaModalVisible(true)}>delete</a>
+                <PulsanteModificaPost item={item} modifica={modifica} />,
+                <a  onClick={() => setEliminaModalVisible(true)}>delete</a>
             ]}
         >
-            <Skeleton avatar title={false} loading={false} active>
                 <List.Item.Meta
                     avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />} //API per avatar
                     title={<a href="#">[{item.id}][{item.title}]</a>}
                     description={item.body}
                 />
                 <div></div>
-            </Skeleton>
-            {eliminaModalVisible && (
+
+                {eliminaModalVisible && (
                 <EliminaPost
                     elimina={confermaEliminazione} 
                     onCancel={() => setEliminaModalVisible(false)} 
                 />
             )}
 
-            <ModificaPost
-                visible={editModalVisible}
-                onCancel={() => setEditModalVisible(false)}
-                item={item}
-                modifica={modifica}
-            />
+
         </List.Item>
     );
 };
